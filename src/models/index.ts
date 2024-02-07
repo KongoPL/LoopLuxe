@@ -1,1 +1,1 @@
-export * from './Course';
+export * from './Post';

@@ -1,8 +1,22 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useGetPosts } from "./api";
 
 export default function Home() {
+	const {data, loading} = useGetPosts();
+
+	if(loading) {
+		return <>Loading...</>
+	}
+
 	return (
-		<>Welcome on main Page!</>
+		<>
+			{
+				data?.items.map(p => <div key={p.id}>
+					{p.description}<br />
+					<video src={p.resource.url} width="320" autoPlay />
+				</div>)
+			}
+		</>
 	);
 }
