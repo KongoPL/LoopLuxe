@@ -8,6 +8,11 @@ export interface IPost {
 	resource: {
 		url: string;
 		type: EPostResourceType;
+	};
+	stats: {
+		likes: number | false;
+		comments: number | false;
+		saves: number | false;
 	}
 }
 

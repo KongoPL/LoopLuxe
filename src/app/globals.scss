@@ -1,0 +1,13 @@
+ol, ul {
+	&.no-styling {
+		padding: 0;
+		margin: 0;
+
+		list-style: none;
+	}
+}
+
+a.no-styling {
+	color: inherit;
+	text-decoration: none;
+}

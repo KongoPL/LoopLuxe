@@ -1,22 +1,18 @@
 'use client';
 
+import { PostsList } from "@/components";
 import { useGetPosts } from "./api";
 
 export default function Home() {
 	const {data, loading} = useGetPosts();
 
-	if(loading) {
+	if(loading || !data?.items) {
 		return <>Loading...</>
 	}
 
 	return (
 		<>
-			{
-				data?.items.map(p => <div key={p.id}>
-					{p.description}<br />
-					<video src={p.resource.url} width="320" autoPlay />
-				</div>)
-			}
+			<PostsList posts={data.items} />
 		</>
 	);
 }

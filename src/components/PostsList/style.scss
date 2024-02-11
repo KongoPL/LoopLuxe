@@ -1,0 +1,29 @@
+.PostsList-PostsListItem {
+	margin: 0 auto;
+
+	display: grid;
+	grid-template-areas: "post-content post-content" "resource actions";
+	grid-template-columns: 500px auto;
+	gap: 16px 32px;
+	justify-content: center;
+
+	&:not(:last-child) {
+		margin-bottom: 50px;
+	}
+
+	.post-details {
+		grid-area: post-content;
+	}
+
+	.resource {
+		grid-area: resource;
+		width: 100%;
+
+		aspect-ratio: 9/16;
+	}
+
+	.post-actions {
+		grid-area: actions;
+		align-self: end;
+	}
+}
