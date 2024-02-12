@@ -25,15 +25,14 @@ export const displayPrettyNumber = (number: number): string => {
 		// Edge-case for value of 1000B and more
 		return `${numberAsString.substring(0, numberAsString.length - 9)}${units[2]}`
 	}
-
-	// Only part of the input number will be displayed, so get only this part
-	const significantNumberPart = numberAsString.substring(0, 3);
-
 	const unitIndex = Math.min(
 		Math.ceil(numberAsString.length / 3) - 2,
 		2
 	);
-	let integerLength = numberAsString.length % 3;
+	const integerLength = numberAsString.length % 3;
+
+	// Only part of the input number will be displayed, so get only that part
+	const significantNumberPart = numberAsString.substring(0, 3);
 
 	// If number is divisible by 3, then it should be displayed as a whole
 	if (integerLength === 0) {
