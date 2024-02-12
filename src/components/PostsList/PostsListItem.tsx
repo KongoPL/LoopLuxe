@@ -1,6 +1,6 @@
 'use client';
 
-import { IPost, IUser, isUserModel } from "@/models";
+import { IPost, isUserModel } from "@/models";
 import './style.scss';
 import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import { displayPrettyNumber } from "@/utils";
