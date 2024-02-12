@@ -10,9 +10,9 @@ export interface IPost {
 		type: EPostResourceType;
 	};
 	stats: {
-		likes: number | false;
-		comments: number | false;
-		saves: number | false;
+		likes?: number;
+		comments?: number;
+		saves?: number;
 	}
 }
 
@@ -27,7 +27,7 @@ const schema = new Schema<IPost>({
 		type: { type: String } // @TODO Fix lack of enum type
 		// url: { type: String, required },
 		// type: { enum: [0], required }
-	}
+	},
 	// resource: {
 	// 	required,
 	// 	type: new Schema<IPost['resource']>({
@@ -35,6 +35,11 @@ const schema = new Schema<IPost>({
 	// 		type: { type: String, required }
 	// 	})
 	// }
+	stats: {
+		likes: { type: Number },
+		comments: { type: Number },
+		saves: { type: Number },
+	}
 })
 
 export const Post = defineModel('posts', schema);
