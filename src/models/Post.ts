@@ -1,6 +1,7 @@
-import { Schema } from "mongoose";
+import { Schema, PopulatedDoc } from "mongoose";
 import { required } from "./models.const";
 import { defineModel } from "./models.utils";
+import { IUser } from "./User";
 
 export interface IPost {
 	id: string;
@@ -13,7 +14,10 @@ export interface IPost {
 		likes?: number;
 		comments?: number;
 		saves?: number;
-	}
+	};
+
+	user: PopulatedDoc<Pick<IUser, 'id' | 'name'>>;
+	createdAt: Date;
 }
 
 export enum EPostResourceType {
@@ -39,7 +43,10 @@ const schema = new Schema<IPost>({
 		likes: { type: Number },
 		comments: { type: Number },
 		saves: { type: Number },
-	}
+	},
+
+	user: { type: Schema.Types.ObjectId, ref: 'users' },
+	createdAt: { type: Date, required }
 })
 
 export const Post = defineModel('posts', schema);

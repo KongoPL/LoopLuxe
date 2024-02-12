@@ -18,7 +18,12 @@ export const GET = withDB(async () => {
 				comments: Math.round(Math.random() * 1000),
 				likes: 1000 + Math.round(Math.random() * 100000),
 				saves: 1000000 + Math.round(Math.random() * 1000000),
-			}
+			},
+			user: {
+				id: '123',
+				name: 'johndoe123'
+			},
+			createdAt: new Date(),
 		} satisfies IPost).map((p, i) => ({...p, id: +i + 1, description: p.description+' #'+(+i+1)}))
 	} satisfies IGetPostsResponse)
 });
