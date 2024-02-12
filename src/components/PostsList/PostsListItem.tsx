@@ -1,10 +1,12 @@
 'use client';
 
-import { IPost } from "@/models";
+import { IPost, IUser, isUserModel } from "@/models";
 import './style.scss';
 import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import { displayPrettyNumber } from "@/utils";
 import { PostViewportVisibilityContext } from "@/contexts";
+import Link from "next/link";
+import moment from "moment";
 
 interface IProps {
 	post: IPost
@@ -96,19 +98,28 @@ export const PostsListItem: React.FC<IProps> = ({post}) => {
 	return (
 		<div ref={postItemRef} className="PostsList-PostsListItem">
 			<div className="post-details">
+				{isUserModel(post.user) && <header>
+					<Link href={`/user/${post.user.id}`}>@{post.user.name}</Link> {/* @TODO fix link route */}
+					&nbsp;&bull;&nbsp;
+					<Link href={`/post/${post.id}`}>
+						{moment(post.createdAt).calendar()}
+					</Link>
+				</header>}
 				{post.description}
 			</div>
-			<video
-				ref={videoRef}
-				src={post.resource.url}
-				className="resource"
-				loop
-				muted
-				preload="metadata"
-				disablePictureInPicture
-				disableRemotePlayback
-				onContextMenu={(event) => {event.preventDefault();}}
-			/>
+			<Link href={`/post/${post.id}`}>
+				<video
+					ref={videoRef}
+					src={post.resource.url}
+					className="resource"
+					loop
+					muted
+					preload="metadata"
+					disablePictureInPicture
+					disableRemotePlayback
+					onContextMenu={(event) => {event.preventDefault();}}
+				/>
+			</Link>
 			<ul className="post-actions no-styling text-center">
 				<li>
 					<a href="#" className="no-styling" onClick={onLikeClick}>

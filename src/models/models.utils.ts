@@ -7,7 +7,7 @@ export const defineModel = <TSchema extends Schema>(
 	collection?: string,
 	options?: CompileModelOptions
 ) => {
-	if(name in mongoose.models) {
+	if(mongoose.models && name in mongoose.models) {
 		// Model already defined, return this as the same thing that model() method would return
 		// ReturnType<typeof model<TSchema>> for some reason doesn't return same value.
 		return mongoose.models[name] as Model<
