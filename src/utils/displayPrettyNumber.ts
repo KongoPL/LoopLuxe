@@ -4,7 +4,7 @@
  * @example 999 -> 999
  * @example 1000 -> 1k
  * @example 1080 -> 1,08k
- * @example 1119 -> 1,11k
+ * @example 1119 -> 1,12k
  * @example 10250 -> 10,2k
  * @param number Input number
  * @returns pretty number
@@ -28,16 +28,19 @@ export const displayPrettyNumber = (number: number): string => {
 	}
 
 	const shortenedValue = number / divider;
-	const reminderValue = number % divider;
 
+	// "toFixed" is the best method, however it rounds our value,
+	// so final precision have to be calculated on rounded value:
+	const roundedValue = +shortenedValue.toFixed(2);
+	const reminderValue = Math.round(roundedValue % 1 * 100);
+
+	// 1.00 -> 1, 1.012 -> 1.01, 10.24 -> 10.2
 	let precision = (
-		shortenedValue < 10 ? 2 :
-		(shortenedValue < 100 ? 1 : 0)
+		reminderValue < 1 ? 0 : (
+			roundedValue < 10 ? 2 :
+			(roundedValue < 100 ? 1 : 0)
+		)
 	);
 
-	if(reminderValue === 0) {
-		precision = 0;
-	}
-
-	return `${shortenedValue.toFixed(precision)}${units[unitIndex]}`;
+	return `${roundedValue.toFixed(precision)}${units[unitIndex]}`;
 }
