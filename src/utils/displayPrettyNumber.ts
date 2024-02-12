@@ -19,28 +19,31 @@ export const displayPrettyNumber = (number: number): string => {
 	}
 
 	const units = ['k', 'M', 'B'];
-	let unitIndex = 0;
-	let divider = 1000;
+	const numberAsString = number.toString();
 
-	while(number >= divider * 1000 && unitIndex < units.length - 1) {
-		unitIndex++;
-		divider = divider * 1000
+	if(number >= 1000**4) {
+		// Edge-case for value of 1000B and more
+		return `${numberAsString.substring(0, numberAsString.length - 9)}${units[2]}`
 	}
 
-	const shortenedValue = number / divider;
+	// Only part of the input number will be displayed, so get only this part
+	const significantNumberPart = numberAsString.substring(0, 3);
 
-	// "toFixed" is the best method, however it rounds our value,
-	// so final precision have to be calculated on rounded value:
-	const roundedValue = +shortenedValue.toFixed(2);
-	const reminderValue = Math.round(roundedValue % 1 * 100);
-
-	// 1.00 -> 1, 1.012 -> 1.01, 10.24 -> 10.2
-	let precision = (
-		reminderValue < 1 ? 0 : (
-			roundedValue < 10 ? 2 :
-			(roundedValue < 100 ? 1 : 0)
-		)
+	const unitIndex = Math.min(
+		Math.ceil(numberAsString.length / 3) - 2,
+		2
 	);
+	let integerLength = numberAsString.length % 3;
 
-	return `${roundedValue.toFixed(precision)}${units[unitIndex]}`;
+	// If number is divisible by 3, then it should be displayed as a whole
+	if (integerLength === 0) {
+		return `${significantNumberPart}${units[unitIndex]}`;
+	} else {
+		const integerPart = significantNumberPart.substring(0, integerLength);
+		const decimalPart = significantNumberPart.substring(integerLength);
+
+		return `${integerPart}${+decimalPart > 0 ? `.${decimalPart}` : ''}${
+			units[unitIndex]
+		}`;
+	}
 }

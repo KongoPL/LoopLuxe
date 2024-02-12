@@ -15,14 +15,14 @@ describe('displayPrettyNumber', () => {
 		// precision tests:
 		[1001, '1k'],
 		[1010, '1.01k'],
-		[9999, '10k'],
+		[9999, '9.99k'],
 		[10000, '10k'],
 		[10001, '10k'],
-		[10099, '10.1k'],
+		[10099, '10k'],
 		[10100, '10.1k'],
-		[10999, '11k'],
+		[10999, '10.9k'],
 		[100000, '100k'],
-		[100999, '101k'],
+		[100999, '100k'],
 		[101000, '101k'],
 
 		// edge-case tests:
@@ -37,4 +37,16 @@ describe('displayPrettyNumber', () => {
 	it('throws an error for negative value', () => {
 		expect(() => { displayPrettyNumber(-1); }).toThrow();
 	});
+
+	// test('performance', () => {
+	// 	const cases = Array(10000000).fill('').map((v,i) => (i * 100 + i));
+
+	// 	const start = (new Date().getTime());
+	// 	for(let i = 0; i < cases.length; i++) {
+	// 		displayPrettyNumber(cases[i]);
+	// 	}
+	// 	const end = (new Date().getTime());
+
+	// 	console.log(end - start);
+	// });
 });
